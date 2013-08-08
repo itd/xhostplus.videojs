@@ -11,18 +11,18 @@
   <include package=".browser" />
   <include package=".content" />
   <include package=".portlets" />
-  
+
   <!-- Register the installation GenericSetup extension profile -->
   <genericsetup:registerProfile
       name="default"
       title="XHOSTPLUS VideoJS"
       directory="profiles/default"
-      description="A javascript videoplayer with flash fallback"
+      description="A javascript videoplayer with flash fallback - NREL style!"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
-  
+
   <i18n:registerTranslations directory="locales" />
-  
+
   <!-- -*- extra stuff goes here -*- -->
 
 </configure>
