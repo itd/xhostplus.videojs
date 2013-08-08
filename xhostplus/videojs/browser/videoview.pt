@@ -7,11 +7,17 @@
       i18n:domain="xhostplus.videojs">
 <body>
 
-<metal:slot metal:fill-slot="body">
-    <h1 id="DesktopTitle" tal:content="context/Title|nothing">Document Title</h1>
+<metal:main fill-slot="main">
+  <tal:main-macro metal:define-macro="main"
+      tal:define="toLocalizedTime nocall:context/@@plone/toLocalizedTime">
 
-    <div id="DesktopDescription" tal:content="context/Description|nothing">Document
-     Description goes here.</div>
+    <div tal:replace="structure provider:plone.abovecontenttitle"/>
+    <h1 class="documentFirstHeading" tal:content="context/title"/>
+    <div tal:replace="structure provider:plone.belowcontenttitle"/>
+    <p class="documentDescription" tal:content="context/description"/>
+    <div tal:replace="structure provider:plone.abovecontentbody"/>
+
+
 
     <script src="" type="text/javascript" charset="utf-8"
             tal:attributes="src string:${here/portal_url}/++resource++xhostplus.videojs.javascripts/video.js"></script>
@@ -105,7 +111,15 @@
               Youtube embed code goes here
           </div>
       </tal:youtube>
-</metal:slot>
+
+
+
+
+    <div tal:replace="structure provider:plone.belowcontentbody"/>
+
+  </tal:main-macro>
+</metal:main>
 
 </body>
 </html>
+
