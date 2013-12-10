@@ -20,6 +20,34 @@ VideoSchema = schemata.ATContentTypeSchema.copy() + atapi.Schema((
 
     # -*- Your Archetypes field definitions here ... -*-
 
+    atapi.TextField('text',
+        required=False,
+        searchable=True,
+        storage=atapi.AnnotationStorage(),
+        widget=atapi.RichWidget(
+            description='',
+            label=_(u'label_body_text', default=u'Video Description'),
+        ),
+        default_output_type='text/html'
+    ),
+
+    atapi.ImageField('poster',
+                required = False,
+                languageIndependent = False,
+                allowable_content_types=('image/png','image/jpeg'),
+                default_content_type='image/jpeg',
+                validators = (
+                    ('isNonEmptyFile', V_REQUIRED),
+                ),
+                widget = atapi.FileWidget(
+                     description = _(u"A png or jpg file for the poster"),
+                     label= _(u"Poster Image"),
+                     show_content_type = False,
+                ),
+                storage=atapi.AttributeStorage(),
+    ),
+
+
     atapi.FileField('webm_video.webm',
                 required = False,
                 languageIndependent = False,
@@ -233,6 +261,7 @@ class Video(base.ATCTContent):
                           src="http://www.youtube.com/embed/%s" ></iframe>""" % vid
 
     security.declarePublic('getWebMAbsoluteURL')
+
     def getWebMAbsoluteURL(self):
         if self.getWebm_url():
             return self.getWebm_url()
@@ -309,6 +338,7 @@ class Video(base.ATCTContent):
         if not flv_file and not REQUEST.get('flv_video.flv_delete', None) == 'delete':
             flv_file = self.getFlv_file()
 
+        poster_url = REQUEST.get('poster_url', None)
         webm_url = REQUEST.get('webm_url', None)
         h264_url = REQUEST.get('h264_url', None)
         ogg_url = REQUEST.get('ogg_url', None)

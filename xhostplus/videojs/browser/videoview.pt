@@ -32,11 +32,19 @@
                          h264 context/getH264AbsoluteURL;
                          ogg context/getOGGAbsoluteURL;
                          flv context/getFLVAbsoluteURL;
-                         flowplayer_video context/getFlowplayerVideoURL;">
+                         flowplayer_video context/getFlowplayerVideoURL;
+                         posterob  context/getPoster;
+                         posterurl string:${context/absolute_url}/poster;
+                         defposter string:${here/portal_url}/++resource++xhostplus.videojs.images/video-bg.png;
+                         ">
 
             <!-- Using the Video for Everybody Embed Code http://camendesign.com/code/video_for_everybody -->
-            <video class="video-js" width="380" height="290" controls="controls" preload="preload" poster=""
-                   tal:attributes="poster string:${here/portal_url}/++resource++xhostplus.videojs.images/video-bg.png">
+
+            <video
+              class="video-js" width="380" height="290"
+              controls="controls" preload="preload" poster=""
+              tal:attributes="poster python: posterurl if posterob else defposter">
+
               <tal:source tal:condition="webm">
                 <source src="" type='video/webm; codecs="vp8, vorbis"'
                         tal:attributes="src webm" />
